@@ -101,3 +101,11 @@ module "cluster_autoscaler" {
   depends_on = [module.metrics_server]
 
 }
+
+module "prometheus" {
+  source = "../../modules/prometheus"
+
+  depends_on = [
+    module.cluster_autoscaler
+  ]
+}

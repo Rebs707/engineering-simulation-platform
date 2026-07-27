@@ -1,21 +1,29 @@
 resource "helm_release" "prometheus" {
   name             = var.release_name
   repository       = "https://prometheus-community.github.io/helm-charts"
-  chart            = "kube-prometheus-stack"
+  chart            = "prometheus"
   namespace        = var.namespace
-  create_namespace = true
   version          = var.chart_version
+  create_namespace = true
   wait             = true
-  timeout          = 600
+  timeout          = 900
 
   set = [
     {
-      name  = "grafana.enabled"
-      value = tostring(var.grafana_enabled)
+      name  = "server.persistentVolume.enabled"
+      value = "true"
     },
     {
-      name  = "grafana.service.type"
-      value = var.grafana_service_type
+      name  = "server.persistentVolume.size"
+      value = var.storage_size
+    },
+    {
+      name  = "alertmanager.enabled"
+      value = "true"
+    },
+    {
+      name  = "pushgateway.enabled"
+      value = "false"
     }
   ]
 }

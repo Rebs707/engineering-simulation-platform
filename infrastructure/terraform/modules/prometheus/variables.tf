@@ -1,26 +1,23 @@
 variable "namespace" {
-  type    = string
-  default = "monitoring"
+  description = "Kubernetes namespace for Prometheus."
+  type        = string
+  default     = "monitoring"
 }
 
 variable "release_name" {
-  type    = string
-  default = "prometheus"
+  description = "Helm release name."
+  type        = string
+  default     = "prometheus"
 }
 
 variable "chart_version" {
-  type    = string
-  default = "27.19.0"
-}
-
-variable "grafana_enabled" {
-  description = "Enable Grafana in the monitoring stack."
-  type        = bool
-  default     = true
-}
-
-variable "grafana_service_type" {
-  description = "Kubernetes service type for Grafana."
+  description = "Prometheus Helm chart version."
   type        = string
-  default     = "ClusterIP"
+  default     = "27.20.1"
+}
+
+variable "storage_size" {
+  description = "Persistent storage size for the Prometheus server."
+  type        = string
+  default     = "20Gi"
 }
