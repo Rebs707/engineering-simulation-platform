@@ -28,3 +28,12 @@ module "iam" {
 module "ecr" {
   source = "../../modules/ecr"
 }
+
+module "eks" {
+  source = "../../modules/eks"
+
+  cluster_name     = "engineering-simulation-dev"
+  cluster_role_arn = module.iam.cluster_role_arn
+  node_role_arn    = module.iam.node_role_arn
+  subnet_ids       = module.subnets.private_subnet_ids
+}
