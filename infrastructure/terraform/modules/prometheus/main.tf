@@ -7,4 +7,15 @@ resource "helm_release" "prometheus" {
   version          = var.chart_version
   wait             = true
   timeout          = 600
+
+  set = [
+    {
+      name  = "grafana.enabled"
+      value = tostring(var.grafana_enabled)
+    },
+    {
+      name  = "grafana.service.type"
+      value = var.grafana_service_type
+    }
+  ]
 }
