@@ -109,3 +109,21 @@ module "prometheus" {
     module.cluster_autoscaler
   ]
 }
+
+module "grafana" {
+
+  source = "../../modules/grafana"
+
+
+
+  prometheus_url = "http://prometheus-server.monitoring.svc.cluster.local"
+
+
+
+  depends_on = [
+
+    module.prometheus
+
+  ]
+
+}
