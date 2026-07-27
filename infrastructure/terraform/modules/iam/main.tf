@@ -27,3 +27,9 @@ resource "aws_iam_role" "eks_nodes" {
     }]
   })
 }
+
+resource "aws_iam_policy" "aws_load_balancer_controller" {
+  name        = "engineering-simulation-aws-load-balancer-controller"
+  description = "Permissions required by the AWS Load Balancer Controller"
+  policy      = file("${path.module}/aws-load-balancer-controller-policy.json")
+}
