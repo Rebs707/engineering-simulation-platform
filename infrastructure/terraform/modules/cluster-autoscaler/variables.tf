@@ -1,5 +1,5 @@
 variable "cluster_name" {
-  description = "Name of the EKS cluster."
+  description = "EKS cluster name."
   type        = string
 }
 
@@ -9,16 +9,17 @@ variable "cluster_oidc_provider_arn" {
 }
 
 variable "cluster_oidc_issuer_url" {
-  description = "OIDC issuer URL of the EKS cluster."
+  description = "OIDC issuer URL for the EKS cluster."
   type        = string
 }
 
 variable "aws_region" {
-  description = "AWS region containing the EKS cluster."
+  description = "AWS region hosting the EKS cluster."
   type        = string
 }
 
-variable "iam_policy_arn" {
-  description = "IAM policy ARN for Cluster Autoscaler."
+variable "iam_role_name" {
+  description = "IAM role name used by Cluster Autoscaler."
   type        = string
+  default     = "cluster-autoscaler"
 }

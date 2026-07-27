@@ -79,3 +79,25 @@ module "external_secrets" {
 
   depends_on = [module.namespaces]
 }
+
+module "cluster_autoscaler" {
+
+  source = "../../modules/cluster-autoscaler"
+
+
+
+  cluster_name = module.eks.cluster_name
+
+  cluster_oidc_provider_arn = module.eks.cluster_oidc_provider_arn
+
+  cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
+
+  aws_region = var.aws_region
+
+  iam_role_name = "engineering-simulation-dev-cluster-autoscaler"
+
+
+
+  depends_on = [module.metrics_server]
+
+}
