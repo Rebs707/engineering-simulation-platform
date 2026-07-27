@@ -37,3 +37,45 @@ module "eks" {
   node_role_arn    = module.iam.node_role_arn
   subnet_ids       = module.subnets.private_subnet_ids
 }
+
+module "namespaces" {
+  source = "../../modules/namespaces"
+
+  environment = "dev"
+
+  depends_on = [module.eks]
+}
+
+module "metrics_server" {
+  source = "../../modules/metrics-server"
+
+  namespace = "platform-system"
+
+  depends_on = [module.namespaces]
+}
+
+module "aws_load_balancer_controller" {
+  source = "../../modules/aws-load-balancer-controller"
+
+  cluster_name              = module.eks.cluster_name
+  cluster_oidc_provider_arn = module.eks.cluster_oidc_provider_arn
+  cluster_oidc_issuer_url   = module.eks.cluster_oidc_issuer_url
+  aws_region                = var.aws_region
+  vpc_id                    = module.vpc.vpc_id
+  iam_policy_arn            = module.iam.aws_load_balancer_controller_policy_arn
+
+  depends_on = [module.namespaces]
+}
+
+module "external_secrets" {
+  source = "../../modules/external-secrets"
+
+  namespace                 = "external-secrets"
+  cluster_oidc_provider_arn = module.eks.cluster_oidc_provider_arn
+  cluster_oidc_issuer_url   = module.eks.cluster_oidc_issuer_url
+  iam_role_name             = "engineering-simulation-dev-external-secrets"
+  secret_arns               = ["*"]
+  kms_key_arns              = ["*"]
+
+  depends_on = [module.namespaces]
+}
