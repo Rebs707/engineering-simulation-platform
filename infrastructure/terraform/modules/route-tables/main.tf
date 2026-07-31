@@ -6,9 +6,9 @@ resource "aws_route_table" "public" {
     gateway_id = var.internet_gateway_id
   }
 
-  tags = {
-    Name = "public-route-table"
-  }
+  tags = merge(var.tags, {
+    Name = var.public_route_table_name
+  })
 }
 
 resource "aws_route_table" "private" {
@@ -19,9 +19,9 @@ resource "aws_route_table" "private" {
     nat_gateway_id = var.nat_gateway_id
   }
 
-  tags = {
-    Name = "private-route-table"
-  }
+  tags = merge(var.tags, {
+    Name = var.private_route_table_name
+  })
 }
 
 resource "aws_route_table_association" "public" {

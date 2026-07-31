@@ -1,8 +1,8 @@
 resource "aws_ecr_repository" "app" {
-  name                 = "engineering-simulation-app"
-  image_tag_mutability = "MUTABLE"
+  name                 = var.repository_name
+  image_tag_mutability = var.image_tag_mutability
 
   image_scanning_configuration {
-    scan_on_push = true
+    scan_on_push = var.scan_on_push
   }
 }
