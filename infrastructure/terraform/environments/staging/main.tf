@@ -1,7 +1,7 @@
 module "vpc" {
   source = "../../modules/vpc"
 
-  vpc_name = "engineering-simulation-prod"
+  vpc_name = "engineering-simulation-staging"
   vpc_cidr = "10.0.0.0/16"
 }
 
@@ -32,7 +32,7 @@ module "ecr" {
 module "eks" {
   source = "../../modules/eks"
 
-  cluster_name     = "engineering-simulation-prod"
+  cluster_name     = "engineering-simulation-staging"
   cluster_role_arn = module.iam.cluster_role_arn
   node_role_arn    = module.iam.node_role_arn
   subnet_ids       = module.subnets.private_subnet_ids
@@ -73,7 +73,7 @@ module "external_secrets" {
   namespace                 = "external-secrets"
   cluster_oidc_provider_arn = module.eks.cluster_oidc_provider_arn
   cluster_oidc_issuer_url   = module.eks.cluster_oidc_issuer_url
-  iam_role_name             = "engineering-simulation-prod-external-secrets"
+  iam_role_name             = "engineering-simulation-staging-external-secrets"
   secret_arns               = ["*"]
   kms_key_arns              = ["*"]
 
@@ -94,7 +94,7 @@ module "cluster_autoscaler" {
 
   aws_region = var.aws_region
 
-  iam_role_name = "engineering-simulation-prod-cluster-autoscaler"
+  iam_role_name = "engineering-simulation-staging-cluster-autoscaler"
 
 
 
