@@ -5,3 +5,7 @@ terraform {
 resource "terraform_data" "example" {
   input = "state-lock-lab-updated"
 }
+
+resource   "terraform_data"   "format_failure"{
+input="ci-format-test"
+}
