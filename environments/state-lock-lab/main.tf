@@ -9,3 +9,7 @@ resource "terraform_data" "example" {
 resource   "terraform_data"   "format_failure"{
 input="ci-format-test"
 }
+
+resource   "terraform_data"   "format_failure"{
+input="ci-format-test"
+}
