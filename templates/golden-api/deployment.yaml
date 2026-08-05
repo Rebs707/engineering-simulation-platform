@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <SERVICE_NAME>
+  namespace: <NAMESPACE>
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: <SERVICE_NAME>
+  template:
+    metadata:
+      labels:
+        app: <SERVICE_NAME>
+    spec:
+      containers:
+      - name: <SERVICE_NAME>
+        image: <SERVICE_NAME>:1.0
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_HOST
+          value: postgres
+        - name: DB_PORT
+          value: '5432'
+        - name: DB_NAME
+          value: <NAMESPACE>db
+        - name: DB_USER
+          value: <NAMESPACE>
+        - name: DB_PASSWORD
+          value: <NAMESPACE>123
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
